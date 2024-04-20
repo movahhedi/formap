@@ -3697,6 +3697,7 @@ __metadata:
     jest: "npm:^29.5.0"
     jest-environment-jsdom: "npm:^29.5.0"
     json-types2: "npm:^1.0.0"
+    maps-diff: "npm:^0.1.1"
     microbundle: "npm:^0.15.1"
     ts-jest: "npm:^29.1.0"
     typescript: "npm:^5.0.4"
@@ -5294,6 +5295,15 @@ __metadata:
   dependencies:
     tmpl: "npm:1.0.5"
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
+  languageName: node
+  linkType: hard
+
+"maps-diff@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "maps-diff@npm:0.1.1"
+  dependencies:
+    fast-json-stable-stringify: "npm:^2.1.0"
+  checksum: 10c0/a7dfde9ba9264dbe39ebf0118206fad1480a39d58f7bc95ba488fcfe883bd7006f3e7449c244415b5e5a6fac62b90930a455de7bbd91e294e53fe8a1a61c0f52
   languageName: node
   linkType: hard
 

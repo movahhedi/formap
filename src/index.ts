@@ -4,6 +4,8 @@ import {
 	type JSONValidObject,
 } from "json-types2";
 
+export * from "maps-diff";
+
 export interface IFormToSerializableOptions {
 	mutator?: IFormMapMutatorFunction;
 	append?: IFormAppend;

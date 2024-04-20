@@ -1,6 +1,6 @@
 {
 	"name": "formap",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "HTML forms to data, a better alternative to FormData()",
 	"author": "Shahab Movahhedi <dev@shmovahhedi.com>",
 	"license": "MIT",
@@ -71,5 +71,8 @@
 				}
 			]
 		}
+	},
+	"dependencies": {
+		"maps-diff": "^0.1.1"
 	}
 }
