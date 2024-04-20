@@ -10,7 +10,7 @@ export interface IFormToSerializableOptions {
 	prepend?: IFormAppend;
 }
 
-export const FormDataToObject = (fd: FormData) =>
+export const formDataToObject = (fd: FormData) =>
 	Object.fromEntries(
 		Array.from(fd.keys()).map((key) => {
 			const fdAll = fd.getAll(key);
@@ -18,31 +18,31 @@ export const FormDataToObject = (fd: FormData) =>
 		}),
 	);
 
-export const FormById = (formId: string) =>
+export const formById = (formId: string) =>
 	document.getElementById(formId) as HTMLFormElement;
 
-export const FormDataToJson = (fd: FormData) => JSON.stringify(FormDataToObject(fd));
+export const formDataToJson = (fd: FormData) => JSON.stringify(formDataToObject(fd));
 
-export const FormToJson = (form: HTMLFormElement) => FormDataToJson(new FormData(form));
+export const formToJson = (form: HTMLFormElement) => formDataToJson(new FormData(form));
 
-export const FormToJsonById = (formId: string) => FormToJson(FormById(formId));
+export const formToJsonById = (formId: string) => formToJson(formById(formId));
 
 // export const FormToObject = (form: HTMLFormElement) => FormDataToObject(new FormData(form));
 
 // export const FormToObjectById = (formId: string) => FormToObject(FormById(formId));
 
-export const MapToObject = Object.fromEntries;
+export const mapToObject = Object.fromEntries;
 
-export const FormToObject = (
+export const formToObject = (
 	form: HTMLFormElement,
 	options?: IFormToSerializableOptions,
-) => MapToObject(FormToMap(form, options));
+) => mapToObject(formToMap(form, options));
 
-export const FormToObjectById = (formId: string, options?: IFormToSerializableOptions) =>
-	FormToObject(FormById(formId), options);
+export const formToObjectById = (formId: string, options?: IFormToSerializableOptions) =>
+	formToObject(formById(formId), options);
 
-export const FormToMapById = (formId: string, options?: IFormToSerializableOptions) =>
-	FormToMap(FormById(formId), options);
+export const formToMapById = (formId: string, options?: IFormToSerializableOptions) =>
+	formToMap(formById(formId), options);
 
 /**
  * Represents a function that mutates a key-value pair. The function **must** return a value, or the key-value pair will be deleted.
@@ -70,7 +70,7 @@ export type IFormAppend = JSONValidMap | JSONValidObject;
  * @remarks
  * This function supports the following:
  * - HTML form elements names.
- * - Text inputs, textareas, checkboxes, radio buttons, and select elements.
+ * - Text inputs, text-areas, checkboxes, radio buttons, and select elements.
  * - Multiple select elements (returns an array of selected values).
  * - Custom mutator function to modify the values before they are added to the map.
  * - Appending additional key-value pairs to the resulting map.
@@ -121,7 +121,7 @@ export type IFormAppend = JSONValidMap | JSONValidObject;
  * const formMap = FormToMap(formElement, { prepend });
  * // Output: Map { "additionalKey" => "additionalValue", "firstName" => "John", "lastName" => "Doe" }
  */
-export function FormToMap(
+export function formToMap(
 	formElement: HTMLFormElement,
 	{ mutator, append, prepend }: IFormToSerializableOptions = {},
 ): JSONValidMap {
