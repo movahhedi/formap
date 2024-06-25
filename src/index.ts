@@ -1,8 +1,4 @@
-import {
-	type JSONValue,
-	type JSONValidMap,
-	type JSONValidObject,
-} from "json-types2";
+import { type JSONValue, type JSONValidMap, type JSONValidObject } from "json-types2";
 
 export * from "maps-diff";
 
@@ -17,11 +13,10 @@ export const formDataToObject = (fd: FormData) =>
 		Array.from(fd.keys()).map((key) => {
 			const fdAll = fd.getAll(key);
 			return [key, fdAll.length > 1 ? fdAll : fd.get(key)];
-		}),
+		})
 	);
 
-export const formById = (formId: string) =>
-	document.getElementById(formId) as HTMLFormElement;
+export const formById = (formId: string) => document.getElementById(formId) as HTMLFormElement;
 
 export const formDataToJson = (fd: FormData) => JSON.stringify(formDataToObject(fd));
 
@@ -35,16 +30,13 @@ export const formToJsonById = (formId: string) => formToJson(formById(formId));
 
 export const mapToObject = Object.fromEntries;
 
-export const formToObject = (
-	form: HTMLFormElement,
-	options?: IFormToSerializableOptions,
-) => mapToObject(formToMap(form, options));
+export const formToObject = (form: HTMLFormElement, options?: IFormToSerializableOptions) =>
+	mapToObject(formToMap(form, options));
 
 export const formToObjectById = (formId: string, options?: IFormToSerializableOptions) =>
 	formToObject(formById(formId), options);
 
-export const formToMapById = (formId: string, options?: IFormToSerializableOptions) =>
-	formToMap(formById(formId), options);
+export const formToMapById = (formId: string, options?: IFormToSerializableOptions) => formToMap(formById(formId), options);
 
 /**
  * Represents a function that mutates a key-value pair. The function **must** return a value, or the key-value pair will be deleted.
@@ -77,12 +69,17 @@ export type IFormAppend = JSONValidMap | JSONValidObject;
  * - Custom mutator function to modify the values before they are added to the map.
  * - Appending additional key-value pairs to the resulting map.
  * - Prepending additional key-value pairs to the resulting map.
+ * - Custom form elements with a `getValue()` method that returns the value of the element.
  *
  * This function does not support the following:
  * - HTML form inputs without a name attribute.
  * - File inputs (returns an empty string for file inputs).
  *
  * If the form element contains multiple inputs with the same name, the values will be added to the map as an array.
+ *
+ * It also supports and tries to call a `getValue()` method on the form's children, if it exists.
+ * This is useful for custom form elements that need to do some processing before returning their value.
+ * The value returned by `getValue()` should be JSON-serializable.
  *
  * @example
  * // Example 1: Converting a simple form with text inputs
@@ -125,7 +122,7 @@ export type IFormAppend = JSONValidMap | JSONValidObject;
  */
 export function formToMap(
 	formElement: HTMLFormElement,
-	{ mutator, append, prepend }: IFormToSerializableOptions = {},
+	{ mutator, append, prepend }: IFormToSerializableOptions = {}
 ): JSONValidMap {
 	if (!formElement || !(formElement instanceof HTMLFormElement)) {
 		throw new Error("The form element must be an HTMLFormElement.");
@@ -149,17 +146,14 @@ export function formToMap(
 		...formElement.querySelectorAll(
 			// "input[name]:enabled:not([type=button]):not([type=reset]), select[name]:enabled, textarea[name]:enabled, keygen[name]:enabled",
 			// ":is(input, select, textarea)[name]:enabled:not(:is([type=submit], [type=button], [type=reset]))",
-			":is(input, select, textarea)[name]:enabled",
+			":is(input, select, textarea)[name]:enabled"
 		),
 	];
 
 	const childrenLength = children.length;
 
 	for (let i = 0; i < childrenLength; i++) {
-		const child = children[i] as
-			| HTMLInputElement
-			| HTMLSelectElement
-			| HTMLTextAreaElement;
+		const child = children[i] as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 		if (!child) {
 			continue;
@@ -179,26 +173,7 @@ export function formToMap(
 		}
 
 		const childName = child.name;
-		let childValue: string | string[] = child.value;
-
-		// If the child is a select-multiple element, get the values of the selected options
-		if (child instanceof HTMLSelectElement && child.multiple) {
-			childValue = Array.from(child.selectedOptions).map((option) => option.value);
-		}
-
-		const isInputCheckable =
-			child instanceof HTMLInputElement &&
-			["checkbox", "radio"].includes(child.type.toLowerCase());
-
-		if (isInputCheckable) {
-			// Only add the value if it's checked
-			/* if (!child.checked) {
-				continue;
-			} */
-
-			// Add a falsy value if it's not checked
-			childValue = child.checked ? childValue : null;
-		}
+		const childValue = getChildValue(child);
 
 		const previousValue = data.get(childName);
 
@@ -252,4 +227,31 @@ export function formToMap(
 	}
 
 	return data;
+}
+
+function getChildValue(child: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+	if ("getValue" in child && typeof child.getValue === "function") {
+		return child.getValue() as JSONValue;
+	}
+
+	let childValue: string | string[] = child.value;
+
+	// If the child is a select-multiple element, get the values of the selected options
+	if (child instanceof HTMLSelectElement && child.multiple) {
+		childValue = Array.from(child.selectedOptions).map((option) => option.value);
+	}
+
+	const isInputCheckable = child instanceof HTMLInputElement && ["checkbox", "radio"].includes(child.type.toLowerCase());
+
+	if (isInputCheckable) {
+		// Only add the value if it's checked
+		/* if (!child.checked) {
+			continue;
+		} */
+
+		// Add a falsy value if it's not checked
+		childValue = child.checked ? childValue : null;
+	}
+
+	return childValue;
 }
