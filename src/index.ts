@@ -2,6 +2,8 @@ import { type JSONValue, type JSONValidMap, type JSONValidObject } from "json-ty
 
 export * from "maps-diff";
 
+// export const getValueSymbol: symbol = Symbol("getValue");
+
 export interface IFormToSerializableOptions {
 	mutator?: IFormMapMutatorFunction;
 	append?: IFormAppend;
