@@ -74,7 +74,7 @@ export type IFormAppend = JSONValidMap | JSONValidObject;
  * - Custom form elements with a `getValue()` method that returns the value of the element.
  *
  * This function does not support the following:
- * - HTML form inputs without a name attribute.
+ * - HTML form inputs without a `name` attribute.
  * - File inputs (returns an empty string for file inputs).
  *
  * If the form element contains multiple inputs with the same name, the values will be added to the map as an array.
