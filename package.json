@@ -1,6 +1,6 @@
 {
 	"name": "formap",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "HTML forms to data, a better alternative to FormData()",
 	"author": "Shahab Movahhedi <dev@shmovahhedi.com>",
 	"license": "MIT",
