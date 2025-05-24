@@ -24,7 +24,7 @@
 		"serializeArray",
 		"jquery"
 	],
-	"packageManager": "yarn@4.3.1",
+	"packageManager": "yarn@4.9.1",
 	"type": "module",
 	"source": "./src/index.ts",
 	"exports": {
