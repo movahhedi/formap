@@ -2676,9 +2676,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001599":
-  version: 1.0.30001611
-  resolution: "caniuse-lite@npm:1.0.30001611"
-  checksum: 10c0/e6d6549a42b811212f6c4ef2798c45ab5a19484aaee0fa550ec20632a49638d3e53b64e088664d2efab0c5a278d1f8d1dec4654fbce11194e6ec1dc4ba5df466
+  version: 1.0.30001718
+  resolution: "caniuse-lite@npm:1.0.30001718"
+  checksum: 10c0/67f9ad09bc16443e28d14f265d6e468480cd8dc1900d0d8b982222de80c699c4f2306599c3da8a3fa7139f110d4b30d49dbac78f215470f479abb6ffe141d5d3
   languageName: node
   linkType: hard
 
@@ -3697,7 +3697,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
     json-types2: "npm:^1.0.0"
-    maps-diff: "npm:^0.2.0"
+    maps-diff: "npm:^0.2.1"
     microbundle: "npm:^0.15.1"
     ts-jest: "npm:^29.3.4"
     typescript: "npm:^5.8.3"
@@ -5298,12 +5298,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"maps-diff@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "maps-diff@npm:0.2.0"
+"maps-diff@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "maps-diff@npm:0.2.1"
   dependencies:
     fast-json-stable-stringify: "npm:^2.1.0"
-  checksum: 10c0/8439a3e9505a83c8a01147d8194da1656573be3fa59c9ceafa27a7240125fdeca7ec21d7a583e23bec8659bbbe8c177a63e6be8dacde60a4a8cec9420a209846
+  checksum: 10c0/2a71def86ef54ae4196abfa7567a1f21df826827b26d47606450782c76943f2c9380a2d987028bd66c3936c90ee69121d3d3662274831c26ab7f8da4fb8cd72e
   languageName: node
   linkType: hard
 
